@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Project Java Sources" pattern="src[grammar-kit.main]:*..*||file:antlr-based-bootstrap/peg/*||file[grammar-kit.test]:org//*" />
+</component>

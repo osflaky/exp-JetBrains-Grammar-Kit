@@ -1,0 +1,136 @@
+<idea-plugin url="https://github.com/JetBrains/Grammar-Kit">
+  <id>org.jetbrains.idea.grammar</id>
+  <vendor>JetBrains</vendor>
+
+  <name>Grammar-Kit</name>
+  <description>BNF Grammars and JFlex lexers editor. Readable parser/PSI code generator.</description>
+  <resource-bundle>messages.GrammarKitBundle</resource-bundle>
+
+  <depends>com.intellij.modules.lang</depends>
+  <depends optional="true" config-file="plugin-copyright.xml">com.intellij.copyright</depends>
+  <depends optional="true" config-file="plugin-java.xml">com.intellij.java</depends>
+  <depends optional="true" config-file="plugin-uml.xml">com.intellij.diagram</depends>
+  <depends optional="true" config-file="plugin-kotlin.xml">org.jetbrains.kotlin</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <fileType name="BNF" implementationClass="org.intellij.grammar.BnfFileType" fieldName="INSTANCE" extensions="bnf" language="BNF"/>
+    <fileType name="BNF_LP" implementationClass="org.intellij.grammar.livePreview.LivePreviewFileType" fieldName="INSTANCE" language="BNF_LP"/>
+    <lang.parserDefinition language="BNF" implementationClass="org.intellij.grammar.BnfParserDefinition"/>
+    <lang.ast.factory language="BNF" implementationClass="org.intellij.grammar.BnfASTFactory"/>
+    <annotator language="BNF" implementationClass="org.intellij.grammar.editor.BnfAnnotator"/>
+    <annotator language="BNF" implementationClass="org.intellij.grammar.editor.BnfPinMarkerAnnotator"/>
+    <annotator language="BNF" implementationClass="org.intellij.grammar.editor.BnfExpressionMarkerAnnotator"/>
+    <lang.syntaxHighlighterFactory language="BNF" implementationClass="org.intellij.grammar.editor.BnfSyntaxHighlighterFactory"/>
+    <lang.syntaxHighlighterFactory language="BNF_LP" implementationClass="org.intellij.grammar.livePreview.LivePreviewSyntaxHighlighterFactory"/>
+    <highlightingPassFactory implementation="org.intellij.grammar.livePreview.GrammarAtCaretPassFactory"/>
+    <elementDescriptionProvider implementation="org.intellij.grammar.BnfDescriptionProvider"/>
+    <lang.findUsagesProvider language="BNF" implementationClass="org.intellij.grammar.BnfFindUsagesProvider"/>
+    <lang.braceMatcher language="BNF" implementationClass="org.intellij.grammar.BnfBraceMatcher"/>
+    <lang.psiStructureViewFactory language="BNF" implementationClass="org.intellij.grammar.BnfStructureViewFactory"/>
+    <codeInsight.lineMarkerProvider language="BNF" implementationClass="org.intellij.grammar.editor.BnfRuleLineMarkerProvider"/>
+    <codeInsight.lineMarkerProvider language="BNF" implementationClass="org.intellij.grammar.editor.BnfRecursionLineMarkerProvider"/>
+    <lang.commenter language="BNF" implementationClass="org.intellij.grammar.BnfCommenter"/>
+    <completion.contributor language="BNF" implementationClass="org.intellij.grammar.BnfCompletionContributor" order="before javaClassName"/>
+
+    <languageInjector implementation="org.intellij.grammar.psi.impl.BnfStringRegexpInjector"/>
+    <lang.elementManipulator forClass="org.intellij.grammar.psi.impl.BnfStringLiteralExpressionImpl"
+                             implementationClass="org.intellij.grammar.psi.impl.BnfStringManipulator"/>
+    <extendWordSelectionHandler implementation="org.intellij.grammar.editor.BnfWordSelectioner"/>
+    <moveLeftRightHandler language="BNF" implementationClass="org.intellij.grammar.editor.BnfMoveLeftRightHandler"/>
+
+    <spellchecker.support language="BNF" implementationClass="org.intellij.grammar.editor.BnfSpellCheckingStrategy"/>
+
+    <!--<psi.referenceContributor implementation="org.intellij.grammar.psi.impl.BnfStringRefContributor" />-->
+    <referencesSearch implementation="org.intellij.grammar.psi.BnfAttrPatternRefSearcher"/>
+    <lang.refactoringSupport language="BNF" implementationClass="org.intellij.grammar.refactor.BnfRefactoringSupportProvider"/>
+    <inlineActionHandler implementation="org.intellij.grammar.refactor.BnfInlineRuleActionHandler"/>
+    <lang.namesValidator language="BNF" implementationClass="org.intellij.grammar.refactor.BnfNamesValidator"/>
+
+    <lang.unwrapDescriptor language="BNF" implementationClass="org.intellij.grammar.refactor.BnfUnwrapDescriptor"/>
+
+    <lang.foldingBuilder language="BNF" implementationClass="org.intellij.grammar.BnfFoldingBuilder"/>
+
+    <documentationProvider implementation="org.intellij.grammar.BnfDocumentationProvider"/>
+
+    <lang.inspectionSuppressor language="BNF" implementationClass="org.intellij.grammar.inspection.BnfInspectionSuppressor"/>
+
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfResolveInspection"
+                     key="inspection.bnf.resolve.display.name"/>
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfUnusedRuleInspection"
+                     key="inspection.bnf.unused.rule.display.name"/>
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfUnusedAttributeInspection"
+                     key="inspection.bnf.unused.attribute.display.name"/>
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfSuspiciousTokenInspection"
+                     key="inspection.bnf.suspicious.token.display.name"/>
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfLeftRecursionInspection"
+                     key="inspection.bnf.left.recursion.display.name"/>
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfDuplicateRuleInspection"
+                     key="inspection.bnf.duplicate.rule.display.name"/>
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfIdenticalChoiceBranchesInspection"
+                     key="inspection.bnf.identical.choice.branches.display.name"/>
+    <localInspection language="BNF" level="WARNING" groupKey="inspection.group.bnf" enabledByDefault="true"
+                     implementationClass="org.intellij.grammar.inspection.BnfUnreachableChoiceBranchInspection"
+                     key="inspection.bnf.unreachable.choice.branch.display.name"/>
+
+    <colorSettingsPage implementation="org.intellij.grammar.editor.BnfColorSettingsPage"/>
+    <quoteHandler fileType="BNF" className="org.intellij.grammar.editor.BnfQuoteHandler"/>
+
+    <intentionAction>
+      <className>org.intellij.grammar.intention.BnfFlipChoiceIntention</className>
+      <categoryKey>intention.category.bnf</categoryKey>
+      <language>BNF</language>
+    </intentionAction>
+    <intentionAction>
+      <className>org.intellij.grammar.intention.BnfConvertOptExpressionIntention</className>
+      <categoryKey>intention.category.bnf</categoryKey>
+      <language>BNF</language>
+    </intentionAction>
+
+    <!--JFlex Support -->
+    <fileType name="JFlex" implementationClass="org.intellij.jflex.parser.JFlexFileType" fieldName="INSTANCE" extensions="flex" language="JFlex"/>
+    <lang.parserDefinition language="JFlex" implementationClass="org.intellij.jflex.parser.JFlexParserDefinition"/>
+    <lang.ast.factory language="JFlex" implementationClass="org.intellij.jflex.parser.JFlexASTFactory"/>
+    <completion.contributor language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexCompletionContributor" />
+    <lang.findUsagesProvider language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexFindUsagesProvider"/>
+    <elementDescriptionProvider implementation="org.intellij.jflex.editor.JFlexFindUsagesProvider"/>
+    <lang.commenter language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexCommenter"/>
+    <lang.refactoringSupport language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexRefactoringSupportProvider"/>
+    <annotator language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexAnnotator"/>
+    <lang.syntaxHighlighterFactory language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexSyntaxHighlighterFactory"/>
+    <colorSettingsPage implementation="org.intellij.jflex.editor.JFlexColorSettingsPage"/>
+    <lang.braceMatcher language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexBraceMatcher"/>
+    <quoteHandler fileType="JFlex" className="org.intellij.jflex.editor.JFlexQuoteHandler"/>
+    <lang.psiStructureViewFactory language="JFlex" implementationClass="org.intellij.jflex.editor.JFlexStructureViewFactory"/>
+  </extensions>
+  <actions>
+    <group id="grammar.file.group" popup="false">
+      <separator/>
+      <action id="grammar.LivePreview" class="org.intellij.grammar.actions.LivePreviewAction">
+        <keyboard-shortcut keymap="$default" first-keystroke="control alt P"/>
+      </action>
+      <separator/>
+      <add-to-group group-id="ToolsMenu" anchor="before" relative-to-action="ExternalToolsGroup"/>
+      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+    </group>
+    <action id="grammar.HighlightGrammarAtCaretAction" class="org.intellij.grammar.actions.HighlightGrammarAtCaretAction">
+      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="control alt F7"/>
+    </action>
+    <group id="grammar.RefactoringGroup" popup="false">
+      <add-to-group group-id="IntroduceActionsGroup" anchor="first"/>
+      <action id="grammars.IntroduceRule" class="org.intellij.grammar.refactor.BnfIntroduceRuleAction"
+              use-shortcut-of="ExtractMethod"/>
+      <action id="grammars.IntroduceToken" class="org.intellij.grammar.refactor.BnfIntroduceTokenAction"
+              use-shortcut-of="IntroduceConstant" />
+    </group>
+  </actions>
+  <resource-bundle>messages.GrammarKitBundle</resource-bundle>
+</idea-plugin>

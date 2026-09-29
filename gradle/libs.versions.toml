@@ -1,0 +1,20 @@
+[versions]
+# libraries
+annotations = "26.0.2"
+junit = "4.13.2"
+
+# plugins
+changelog = "2.5.0"
+intelliJPlatform = "2.11.0"
+githubRelease = "2.5.2"
+publishPlugin = "2.0.0"
+
+[libraries]
+annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+githubRelease = { id = "com.github.breadmoirai.github-release", version.ref = "githubRelease" }
+intelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "intelliJPlatform" }
+publishPlugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "publishPlugin" }
